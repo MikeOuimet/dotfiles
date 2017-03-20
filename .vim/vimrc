@@ -1,0 +1,102 @@
+"Symbolic link git dir to home folder
+"ln -s $HOME/dotfiles/.vim $HOME/.vim
+
+" Don't preserve backwards compatability with vi
+set nocompatible
+ 
+" Enable file type based indent configuration and syntax highlighting.
+filetype plugin indent on
+ 
+" Enable syntax highlighting
+syntax on
+ 
+" Show line numbers
+set number
+ 
+" Automatically reload changed files if there are no pending changes
+set autoread
+ 
+" Show margin at 80 columns by default
+set colorcolumn=80
+ 
+" Word wrap at 80 columns by default
+set textwidth=79
+ 
+" Don't wrap lines
+set nowrap
+ 
+" Use UTF8 for all files
+set encoding=utf8
+ 
+" Start scrolling before we reach the edges of the editing window
+set scrolloff=14
+ 
+" Highlight cursor line
+augroup CursorLine
+    au!
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorcolumn
+    au WinLeave * setlocal nocursorline
+    au WinLeave * setlocal nocursorcolumn
+augroup END
+hi CursorLine   cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
+hi CursorColumn cterm=NONE ctermbg=black ctermfg=NONE guibg=black guifg=NONE
+ 
+" Don't show whitespace characters
+set nolist
+ 
+" Use spaces instead of tabs
+set expandtab
+ 
+" Tab characters are 4 columns wide
+set tabstop=4
+ 
+" 'Indents' are 4 spaces
+set shiftwidth=4
+ 
+" Make trailing whitespace annoyingly highlighted
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+autocmd InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd BufWinLeave * call clearmatches()
+ 
+" Highlight searches
+set hlsearch
+ 
+" Search incrementally
+set incsearch
+ 
+" Jump to matches when entering regexp
+set showmatch
+ 
+" Disable arrow keys. KEEP YOUR DAMN FINGERS ON THE HOME KEYS
+map <up> <nop>
+map <down> <nop>
+map <left> <nop>
+map <right> <nop>
+imap <up> <nop>
+imap <down> <nop>
+imap <left> <nop>
+imap <right> <nop>
+ 
+" Use ctrl + <movement key> to navigate splits
+nmap <silent> <C-H> :wincmd h<CR>
+nmap <silent> <C-J> :wincmd j<CR>
+nmap <silent> <C-K> :wincmd k<CR>
+nmap <silent> <C-L> :wincmd l<CR>
+ 
+" Open splits in a more intuitive way
+set splitbelow
+set splitright
+ 
+ 
+" Restore the cursor position from the last time the file was opened
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+ 
+" Display the full path in the status line for each split
+set statusline+=%F
+ 
+" Show the buffer number in the status line.
+set laststatus=2 statusline=%02n:%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
